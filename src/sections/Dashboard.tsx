@@ -52,14 +52,14 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
 
   return (
     <div className="space-y-6">
-      {/* Welcome */}
-      <div className="glass-card p-8 rounded-2xl relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
+      {/* Welcome - Ajustado padding para mobile */}
+      <div className="glass-card p-6 md:p-8 rounded-2xl relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-64 h-64 md:w-96 md:h-96 bg-violet-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
         <div className="relative z-10">
-          <h2 className="text-3xl font-bold text-white mb-2">
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-2">
             Bem-vindo ao <span className="gradient-text">Varejo Pro</span>
           </h2>
-          <p className="text-white/60 max-w-xl">
+          <p className="text-white/60 max-w-xl text-sm md:text-base">
             Gerencie seus produtos, acompanhe suas vendas e controle suas finanças 
             em um só lugar. Seu negócio mais organizado do que nunca.
           </p>
@@ -97,7 +97,7 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
                 )}
               </div>
               <h3 className="text-white/60 text-sm font-medium mb-1">{card.title}</h3>
-              <p className="text-2xl font-bold text-white mb-2">{card.value}</p>
+              <p className="text-xl md:text-2xl font-bold text-white mb-2 break-all">{card.value}</p>
               <p className="text-white/40 text-xs">{card.subtitle}</p>
             </div>
           );
@@ -118,13 +118,13 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
                 {lowStockCount > 0 && (
                   <div className="glass-card p-5 rounded-xl border-l-4 border-amber-400">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 rounded-xl bg-amber-500/20">
+                      <div className="p-3 rounded-xl bg-amber-500/20 shrink-0">
                         <Package className="w-6 h-6 text-amber-400" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-white mb-1">Estoque Baixo</h4>
                         <p className="text-white/60 text-sm mb-3">
-                          {lowStockCount} produto(s) com estoque crítico
+                          {lowStockCount} produto(s) críticos
                         </p>
                         <button className="text-amber-400 text-sm font-medium hover:text-amber-300 transition-colors">
                           Ver produtos →
@@ -137,13 +137,13 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
                 {overdueDebtsCount > 0 && (
                   <div className="glass-card p-5 rounded-xl border-l-4 border-red-400">
                     <div className="flex items-start gap-4">
-                      <div className="p-3 rounded-xl bg-red-500/20">
+                      <div className="p-3 rounded-xl bg-red-500/20 shrink-0">
                         <TrendingDown className="w-6 h-6 text-red-400" />
                       </div>
                       <div>
                         <h4 className="font-semibold text-white mb-1">Dívidas Vencidas</h4>
                         <p className="text-white/60 text-sm mb-3">
-                          {overdueDebtsCount} dívida(s) estão vencidas
+                          {overdueDebtsCount} pendência(s)
                         </p>
                         <button className="text-red-400 text-sm font-medium hover:text-red-300 transition-colors">
                           Ver dívidas →
@@ -156,27 +156,27 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
             </>
           )}
 
-          {/* Recent Activity */}
+          {/* Resumo Financeiro - CORRIGIDO PARA RESPONSIVIDADE */}
           <div className="glass-card p-6 rounded-2xl">
             <h3 className="text-lg font-semibold text-white mb-4">Resumo Financeiro</h3>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div className="text-center p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/20">
-                <p className="text-sm text-emerald-400 mb-1">A Receber</p>
-                <p className="text-xl font-bold text-white">{formatCurrency(stats.debtsToReceive)}</p>
+                <p className="text-xs text-emerald-400 mb-1 uppercase tracking-wider font-medium">A Receber</p>
+                <p className="text-lg font-bold text-white break-all">{formatCurrency(stats.debtsToReceive)}</p>
               </div>
               <div className="text-center p-4 rounded-xl bg-red-500/10 border border-red-500/20">
-                <p className="text-sm text-red-400 mb-1">A Pagar</p>
-                <p className="text-xl font-bold text-white">{formatCurrency(stats.debtsToPay)}</p>
+                <p className="text-xs text-red-400 mb-1 uppercase tracking-wider font-medium">A Pagar</p>
+                <p className="text-lg font-bold text-white break-all">{formatCurrency(stats.debtsToPay)}</p>
               </div>
               <div className={`text-center p-4 rounded-xl border ${
                 stats.debtsToReceive - stats.debtsToPay >= 0 
                   ? 'bg-emerald-500/10 border-emerald-500/20' 
                   : 'bg-red-500/10 border-red-500/20'
               }`}>
-                <p className={`text-sm mb-1 ${
+                <p className={`text-xs mb-1 uppercase tracking-wider font-medium ${
                   stats.debtsToReceive - stats.debtsToPay >= 0 ? 'text-emerald-400' : 'text-red-400'
                 }`}>Saldo</p>
-                <p className="text-xl font-bold text-white">
+                <p className="text-lg font-bold text-white break-all">
                   {formatCurrency(stats.debtsToReceive - stats.debtsToPay)}
                 </p>
               </div>
@@ -193,15 +193,15 @@ export function Dashboard({ stats, lowStockCount, overdueDebtsCount }: Dashboard
             </h3>
             <div className="space-y-4">
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-white/60">Vendas Hoje</span>
+                <span className="text-white/60 text-sm">Vendas Hoje</span>
                 <span className="font-semibold text-white">0</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-white/60">Receita Hoje</span>
+                <span className="text-white/60 text-sm">Receita Hoje</span>
                 <span className="font-semibold text-emerald-400">{formatCurrency(0)}</span>
               </div>
               <div className="flex items-center justify-between p-3 rounded-xl bg-white/5">
-                <span className="text-white/60">Lucro Hoje</span>
+                <span className="text-white/60 text-sm">Lucro Hoje</span>
                 <span className="font-semibold text-violet-400">{formatCurrency(0)}</span>
               </div>
             </div>
